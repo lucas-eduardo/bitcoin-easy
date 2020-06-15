@@ -1,0 +1,49 @@
+version: '3'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: docker/web/Dockerfile
+    ports:
+      - '80:80'
+    container_name: web
+    depends_on:
+      - api
+
+  api:
+    build:
+      context: .
+      dockerfile: docker/api/Dockerfile
+    ports:
+      - '3333:3333'
+    container_name: api
+    volumes:
+      - api-logs:/usr/src/node-api/logs:rw
+    environment:
+      - NODE_ENV=development
+      - API_HOST=http://localhost
+      - API_PORT=3333
+      - DB_HOST=pgsql
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASS=docker
+      - DB_SCHEMA=bitcoin-easy
+    depends_on:
+      - pgsql
+
+  pgsql:
+    image: postgres
+    ports:
+      - '5432:5432'
+    container_name: 'pgsql'
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: docker
+      POSTGRES_DB: bitcoin-easy
+
+volumes:
+  api-logs:
+  pg-data:
