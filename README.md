@@ -92,6 +92,9 @@ $ yarn start
 # A aplicação será aberta na porta:3000 - acesse http://localhost:3333
 ```
 
+#### JSON dos requests
+[![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=Bitcoin%20Easy&uri=https%3A%2F%2Fraw.githubusercontent.com%2Flucas-eduardo%2Fbitcoin-easy%2Fmaster%2F.github%2FschemaRequest.json%3Ftoken%3DAFO3JCV222TNSY77MEYD7J2647UV2)
+
 [nodejs]: https://nodejs.org/
 [typescript]: https://www.typescriptlang.org/
 [nestjs]: https://nestjs.com/
