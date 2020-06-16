@@ -3,8 +3,6 @@ import {
   Get,
   UseGuards,
   Req,
-  UseInterceptors,
-  ClassSerializerInterceptor,
 } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/session/guards/jwt-auth.guard';
 import { Request } from 'express';
@@ -17,7 +15,6 @@ export class PositionController {
 
   @Get()
   @UseGuards(JwtAuthGuard)
-  @UseInterceptors(ClassSerializerInterceptor)
   async show(@Req() { user }: Request): Promise<PositionDto[]> {
     const result = await this.positionService.getPosition(user.id);
     return result;

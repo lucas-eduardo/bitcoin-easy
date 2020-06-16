@@ -28,7 +28,7 @@ const SigUp: React.FC = () => {
       }
 
       try {
-        await api.post('account', {
+        await api.post('user', {
           name,
           email,
           password,

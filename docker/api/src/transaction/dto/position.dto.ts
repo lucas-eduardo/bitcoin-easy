@@ -1,5 +1,5 @@
 import { IsNotEmpty, IsNumber, IsDate } from 'class-validator';
-import { Expose, Transform } from 'class-transformer';
+import { Expose, Transform, Exclude } from 'class-transformer';
 
 export class PositionDto {
   @IsNotEmpty()
@@ -32,12 +32,20 @@ export class PositionDto {
   purchaseAmount: number;
 
   @IsNotEmpty()
+  @IsNumber()
+  @Exclude()
+  @Transform(value => Number(value))
+  sellAmount: number;
+
+  @IsNotEmpty()
   @IsDate()
   purchasedDate: Date;
 
   @Expose()
   get variation(): number {
-    return this.currentPrice / this.purchasePrice;
+    const diff = this.sellAmount - this.purchasePrice;
+    const variation = diff / this.purchasePrice;
+    return variation;
   }
 
   constructor(partial: Partial<PositionDto>) {

@@ -1,6 +1,6 @@
 import React, { useMemo, useCallback, useEffect, useState } from 'react';
 import { FiActivity, FiRefreshCcw } from 'react-icons/fi';
-import { parseISO, format } from 'date-fns';
+import { parseISO, format, subHours } from 'date-fns';
 
 import api from '../../../../services/Api';
 import { formatPercentage, formatMoney } from '../../../../utils/formatting';
@@ -31,14 +31,12 @@ const Position: React.FC = () => {
   const [positions, setPositions] = useState<PositionItem[]>([]);
 
   const loadPosition = useCallback(async () => {
+    setPositions([]);
     const { data } = await api.get<any[]>('position');
     const formattedPositions = data.map(item => ({
       ...item,
       percent: formatPercentage(item.variation),
-      purchasedDateFormatted: format(
-        parseISO(item.purchasedDate),
-        'dd/MM/yyyy HH:mm',
-      ),
+      purchasedDateFormatted: format(subHours(parseISO(item.purchasedDate), 3), 'dd/MM/yyyy HH:mm'),
       amountInvested: formatMoney(item.purchaseAmount),
       purchasePrice: formatMoney(item.purchasePrice as number),
       valueBrute: formatMoney((item.variation * item.purchaseAmount) + item.purchaseAmount),

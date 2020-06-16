@@ -27,12 +27,18 @@ export class SaleService {
 
     const salePrice = fraction * sell;
 
+    const value = {
+      userId,
+      balance: Number(totalBalance) + Number(salePrice),
+      btcTotal: fraction
+    };
+
     await this.extractService.insertSell(userId, amount, buy, sell, fraction);
 
     const { balance, btcTotal } = await this.balanceService.updateBalanceAndBtc(
-      userId,
-      Number(totalBalance) + Number(salePrice),
-      fraction,
+      value.userId,
+      value.balance,
+      value.btcTotal
     );
 
     return { balance, btcTotal, salePrice };

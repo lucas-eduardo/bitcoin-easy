@@ -8,7 +8,7 @@ import React, {
 import { FiList, FiRefreshCcw } from 'react-icons/fi';
 import NumberFormat from 'react-number-format';
 import { toast } from 'react-toastify';
-import { parseISO, format } from 'date-fns';
+import { parseISO, subHours, format } from 'date-fns';
 
 import { useModal } from '../../../../hooks/Modal';
 import { useTransactions } from '../../../../hooks/Transactions';
@@ -157,7 +157,7 @@ const Extract: React.FC = () => {
         <tr key={item.id}>
           <td>{types[item.type]}</td>
           <td>{formattedValue(item)}</td>
-          <td>{format(parseISO(item.createdAt), 'dd/MM/yyyy')}</td>
+          <td>{`${format(subHours(parseISO(item.createdAt), 3), 'dd/MM/yyyy')}`}</td>
         </tr>
       )),
     [extract, formattedValue],

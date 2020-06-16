@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, Between } from 'typeorm';
-import { subDays } from 'date-fns';
+import { subDays, addDays } from 'date-fns';
 
 import { ExtractEntity } from '../entity/extract.entity';
 
@@ -16,7 +16,7 @@ export class ExtractService {
     userId: number,
   ): Promise<ExtractEntity[]> {
     const startTime = new Date();
-    const betweenDate = Between(subDays(startTime, 90), startTime);
+    const betweenDate = Between(subDays(startTime, 90), addDays(startTime, 1));
     const extract = await this.extractRepository.find({
       where: {
         userId,

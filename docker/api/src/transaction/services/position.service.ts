@@ -11,7 +11,7 @@ export class PositionService {
   ) {}
 
   async getPosition(userId: number): Promise<PositionDto[]> {
-    const { buy } = await this.priceService.purchaseAndSaleValue();
+    const { buy, sell } = await this.priceService.purchaseAndSaleValue();
 
     const extract = await this.extractService.findExtractInvestiment(userId);
 
@@ -24,6 +24,7 @@ export class PositionService {
         currentBtcAmount: item.amountInvested / buy,
         purchaseAmount: item.amountInvested,
         purchasedDate: item.createdAt,
+        sellAmount: sell
       });
     });
 

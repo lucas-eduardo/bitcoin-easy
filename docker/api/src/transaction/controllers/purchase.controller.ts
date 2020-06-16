@@ -4,8 +4,6 @@ import {
   Body,
   UseGuards,
   Req,
-  UseInterceptors,
-  ClassSerializerInterceptor,
 } from '@nestjs/common';
 import { Request } from 'express';
 
@@ -22,7 +20,6 @@ export class PurchaseController {
 
   @Post()
   @UseGuards(JwtAuthGuard)
-  @UseInterceptors(ClassSerializerInterceptor)
   async store(
     @Req() { user }: Request,
     @Body() { amount }: { amount: number },
